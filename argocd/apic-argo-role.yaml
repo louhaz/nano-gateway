@@ -17,6 +17,7 @@ rules:
       - operator.ibm.com
       - apps
       - batch
+      - secrets
       - operator.autoscaling.openshift.io
       - ""
     resources:
