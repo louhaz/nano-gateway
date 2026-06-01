@@ -46,10 +46,12 @@ rules:
       - nano.datapower.ibm.com
     resources:
       - apis
+      - apisets
       - assemblies
       - autoscaleconfigs
       - jwtproviders
       - managements
+      - mcptools
       - oauthproviders
       - runtimeconfigs
       - runtimes
@@ -68,11 +70,13 @@ rules:
       - nano.datapower.ibm.com
     resources:
       - apis/status
+      - apisets/status
       - assemblies/status
       - autoscaleconfigs/status
       - jwtproviders/status
       - managements/scale
       - managements/status
+      - mcptools/status
       - oauthproviders/status
       - runtimeconfigs/status
       - runtimes/scale
