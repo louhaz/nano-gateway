@@ -1,0 +1,103 @@
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+---
+# Valkey CA Certificate
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: valkey-ca
+  labels:
+    app.kubernetes.io/instance: "valkey"
+    app.kubernetes.io/managed-by: "ibm-apiconnect"
+    app.kubernetes.io/name: "valkey-ca"
+spec:
+  duration: 87600h # 10 years
+  renewBefore: 720h # 30 days
+  privateKey:
+    rotationPolicy: Always
+  secretName: valkey-ca
+  commonName: "ValkeyCA"
+  usages:
+  - digital signature
+  - key encipherment
+  - cert sign
+  isCA: true
+  issuerRef:
+    name: selfsigning-issuer
+    kind: Issuer
+  secretTemplate:
+    labels:
+      app.kubernetes.io/instance: "valkey"
+      app.kubernetes.io/managed-by: "ibm-apiconnect"
+      app.kubernetes.io/name: "valkey-ca"
+---
+# Valkey CA Issuer
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: valkey-issuer
+  labels:
+    app.kubernetes.io/instance: "valkey"
+    app.kubernetes.io/managed-by: "ibm-apiconnect"
+    app.kubernetes.io/name: "valkey-issuer"
+spec:
+  ca:
+    secretName: valkey-ca
+---
+# Valkey Server Certificate with DNS SANs
+# This certificate is used for TLS connections to Valkey services
+# The secret will contain: ca.crt, tls.crt, and tls.key
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: valkey-tls
+  labels:
+    app.kubernetes.io/instance: "valkey"
+    app.kubernetes.io/managed-by: "ibm-apiconnect"
+    app.kubernetes.io/name: "valkey-tls"
+spec:
+  subject:
+    organizations:
+    - cert-manager
+  commonName: valkey.datapower-nano-system.svc.cluster.local
+  dnsNames:
+  - valkey.datapower-nano-system.svc.cluster.local
+  - valkey.datapower-nano-system.svc
+  - valkey-headless.datapower-nano-system.svc.cluster.local
+  - valkey-headless.datapower-nano-system.svc
+  - valkey-headless
+  - valkey
+  - valkey-leader-headless.datapower-nano-system.svc.cluster.local
+  - valkey-leader-headless.datapower-nano-system.svc
+  - valkey-leader-headless
+  - valkey-leader.datapower-nano-system.svc.cluster.local
+  - valkey-leader.datapower-nano-system.svc
+  - valkey-leader
+  secretName: valkey-tls
+  issuerRef:
+    name: valkey-issuer
+  usages:
+  - "server auth"
+  - "digital signature"
+  - "key encipherment"
+  duration: 17520h # 2 years
+  renewBefore: 720h # 30 days
+  privateKey:
+    rotationPolicy: Always
+  secretTemplate:
+    labels:
+      app.kubernetes.io/instance: "valkey"
+      app.kubernetes.io/managed-by: "ibm-apiconnect"
+      app.kubernetes.io/name: "valkey-tls"

@@ -12,7 +12,9 @@ spec:
         - name: datapower
           namespace: apic
           sync-wave: "300"
-
+        - name: valkey
+          namespace: datapower-nano-system
+          sync-wave: "300"
   template:
     metadata:
       name: '{{name}}'
