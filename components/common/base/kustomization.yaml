@@ -7,4 +7,5 @@ resources:
   - operatorgroup.yaml
   - copy-cert
   - letsencrypt-chain.yaml
+  - gateway-api-crds.yaml
   

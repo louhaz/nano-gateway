@@ -1,0 +1,1 @@
+https://www.ibm.com/docs/en/api-connect/software/12.1.0?topic=openshift-installing-api-connect-in-single-namespace
