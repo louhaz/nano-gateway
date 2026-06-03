@@ -23,5 +23,6 @@ rules:
       - nano.datapower.ibm.com
       - gateway.apiconnect.ibm.com
       - valkey.datapower.ibm.com
+      - rbac.authorization.k8s.io
     resources:
       - '*'
