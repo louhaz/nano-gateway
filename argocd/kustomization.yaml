@@ -27,7 +27,7 @@ patches:
   patch: |-
     - op: add
       path: /spec/source/repoURL
-      value: https://github.com/Nordic-MVP-GitOps-Repos/apic-v12.git
+      value: https://github.com/louhaz/nano-gateway.git
     - op: add
       path: /spec/source/targetRevision
 - target:
@@ -36,6 +36,6 @@ patches:
   patch: |-
     - op: add
       path: /spec/template/spec/source/repoURL
-      value: https://github.com/Nordic-MVP-GitOps-Repos/apic-v12.git
+      value: https://github.com/louhaz/nano-gateway.git
     - op: add
       path: /spec/template/spec/source/targetRevision
