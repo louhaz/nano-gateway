@@ -6,12 +6,6 @@ spec:
   generators:
   - list:
       elements:
-        - name: apiconnect
-          namespace: apic
-          sync-wave: "300"
-        - name: datapower
-          namespace: apic
-          sync-wave: "300"
         - name: valkey
           namespace: apic
           sync-wave: "300"
