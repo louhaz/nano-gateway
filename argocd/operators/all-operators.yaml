@@ -6,12 +6,6 @@ spec:
   generators:
   - list:
       elements:
-        - name: apiconnect
-          namespace: apic
-        - name: datapower
-          namespace: apic
-        - name: ibm-common-services
-          namespace: apic
         - name: openshift-cert-manager
           namespace: cert-manager-operator
         - name: cert-utils
