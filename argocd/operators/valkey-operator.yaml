@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: valkey-operator
-  namespace: openshift-gitops
+  namespace: argocd
   labels:
     group: applications
   annotations:
