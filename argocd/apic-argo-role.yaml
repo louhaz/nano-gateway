@@ -3,18 +3,93 @@ apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: apic-argo-role
 rules:
-  - verbs:
-      - '*'
+  # Core resources (namespaces, configmaps, secrets, services, etc.)
+  - verbs: ['*']
+    apiGroups: ['']
+    resources:
+      - namespaces
+      - configmaps
+      - secrets
+      - services
+      - serviceaccounts
+      - pods
+      - persistentvolumeclaims
+      - events
+
+  # Workloads
+  - verbs: ['*']
+    apiGroups: [apps]
+    resources:
+      - deployments
+      - statefulsets
+      - replicasets
+      - daemonsets
+
+  - verbs: ['*']
+    apiGroups: [batch]
+    resources:
+      - jobs
+      - cronjobs
+
+  - verbs: ['*']
+    apiGroups: [autoscaling]
+    resources:
+      - horizontalpodautoscalers
+
+  - verbs: ['*']
+    apiGroups: [policy]
+    resources:
+      - poddisruptionbudgets
+
+  # RBAC (ArgoCD needs to manage roles/bindings it deploys)
+  - verbs: ['*']
+    apiGroups: [rbac.authorization.k8s.io]
+    resources:
+      - clusterroles
+      - clusterrolebindings
+      - roles
+      - rolebindings
+
+  # Networking
+  - verbs: ['*']
+    apiGroups: [networking.k8s.io]
+    resources:
+      - ingresses
+      - networkpolicies
+
+  # OLM / Operator lifecycle
+  - verbs: ['*']
+    apiGroups: [operators.coreos.com]
+    resources:
+      - subscriptions
+      - operatorgroups
+      - catalogsources
+      - installplans
+
+  # Cert-manager
+  - verbs: ['*']
+    apiGroups: [cert-manager.io]
+    resources:
+      - certificates
+      - issuers
+      - clusterissuers
+
+  # External Secrets
+  - verbs: ['*']
+    apiGroups: [external-secrets.io]
+    resources: ['*']
+
+  - verbs: ['*']
+    apiGroups: [generators.external-secrets.io]
+    resources: ['*']
+
+  - verbs: ['*']
+    apiGroups: [operator.external-secrets.io]
+    resources: ['*']
+
+  # IBM / APIC operands
+  - verbs: ['*']
     apiGroups:
-      - autoscaling
-      - apps
-      - batch
-      - cert-manager.io
-      - tekton.dev
-      - logging.openshift.io
-      - operator.autoscaling.openshift.io
-      - networking.k8s.io
-      - monitoring.coreos.com
       - operator.ibm.com
       - apiconnect.ibm.com
       - datapower.ibm.com
@@ -23,10 +98,10 @@ rules:
       - nano.datapower.ibm.com
       - gateway.apiconnect.ibm.com
       - valkey.datapower.ibm.com
-      - rbac.authorization.k8s.io
-      - external-secrets.io
-      - generators.external-secrets.io
-      - operator.external-secrets.io
-      - ''
-    resources:
-      - '*'
+    resources: ['*']
+
+  # Monitoring
+  - verbs: ['*']
+    apiGroups: [monitoring.coreos.com]
+    resources: ['*']
+
