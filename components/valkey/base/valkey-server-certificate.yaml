@@ -10,22 +10,22 @@ spec:
   secretName: valkey-tls-secret
   duration: 8760h  # 365 days
   renewBefore: 720h  # 30 days
-  commonName: valkey.apic.svc.cluster.local
+  commonName: valkey.nanogw.svc.cluster.local
   usages:
     - digital signature
     - key encipherment
   dnsNames:
-    - valkey.apic.svc.cluster.local
-    - valkey.apic.svc
-    - valkey-headless.apic.svc.cluster.local
-    - valkey-headless.apic.svc
+    - valkey.nanogw.svc.cluster.local
+    - valkey.nanogw.svc
+    - valkey-headless.nanogw.svc.cluster.local
+    - valkey-headless.nanogw.svc
     - valkey-headless
     - valkey
-    - valkey-leader-headless.apic.svc.cluster.local
-    - valkey-leader-headless.apic.svc
+    - valkey-leader-headless.nanogw.svc.cluster.local
+    - valkey-leader-headless.nanogw.svc
     - valkey-leader-headless
-    - valkey-leader.apic.svc.cluster.local
-    - valkey-leader.apic.svc
+    - valkey-leader.nanogw.svc.cluster.local
+    - valkey-leader.nanogw.svc
     - valkey-leader
   privateKey:
     algorithm: RSA
