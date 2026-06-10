@@ -1,0 +1,53 @@
+server:
+  # ArgoCD must run in insecure mode when TLS is terminated at the Ingress
+  extraArgs:
+    - --insecure
+
+  ingress:
+    enabled: true
+    ingressClassName: public-iks-k8s-nginx
+    annotations:
+      nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    # IKS public ingress subdomain for cluster mycluster-eu-de-1-bxf.8x32
+    hostname: argocd.mycluster-eu-de-1-bxf-8x3-e7d3d93b8b317d269525bf063b24f98d-0000.eu-de.containers.appdomain.cloud
+    tls: true
+    extraTls:
+      - hosts:
+          - argocd.mycluster-eu-de-1-bxf-8x3-e7d3d93b8b317d269525bf063b24f98d-0000.eu-de.containers.appdomain.cloud
+        secretName: mycluster-eu-de-1-bxf-8x3-e7d3d93b8b317d269525bf063b24f98d-0000
+
+configs:
+  params:
+    # Required when TLS is terminated at the Ingress
+    server.insecure: "true"
+
+  cm:
+    # Required for SSO redirect URIs and the UI login link
+    url: https://argocd.mycluster-eu-de-1-bxf-8x3-e7d3d93b8b317d269525bf063b24f98d-0000.eu-de.containers.appdomain.cloud
+
+repoServer:
+  replicas: 1
+
+applicationSet:
+  replicas: 1
+
+notifications:
+  enabled: true
+
+redis:
+  enabled: true
+
+dex:
+  # Disable Dex if you are not using SSO
+  enabled: false
+
+global:
+  # Resource limits — tune per environment
+  resources:
+    limits:
+      cpu: 1
+      memory: 1Gi
+    requests:
+      cpu: 100m
+      memory: 128Mi

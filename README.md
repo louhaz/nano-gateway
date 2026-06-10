@@ -1,7 +1,9 @@
 Prereq: 
 
-OLM installed.
-ArgoCD installed.
+
+ArgoCD installed - via Helm
+
+ibm-entitlement-key secret created.
 
 Apply bootstrap.yaml.
 

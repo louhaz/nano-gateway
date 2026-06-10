@@ -3,19 +3,15 @@ kind: Kustomization
 
 resources:
 
-  #- apic-argo-role.yaml
-  #- apic-argo-rb.yaml
+  - apic-argo-role.yaml
+  - apic-argo-rb.yaml
 
-  - operators/cert-manager-operator.yaml
-  - operators/externals-secrets-operator.yaml
-
-  #- common.yaml
-
+  #- operators/cert-manager-operator.yaml
+  #- operators/externals-secrets-operator.yaml
 
   #- operators/nanogw-operator.yaml
   #- operators/valkey-operator.yaml
 
-  
   #- operands/all-operands.yaml
  
 

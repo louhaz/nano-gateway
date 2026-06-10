@@ -3,8 +3,6 @@ kind: Application
 metadata:
   name: cert-manager-operator
   namespace: argocd
-  labels:
-    group: applications
   annotations:
     argocd.argoproj.io/sync-wave: "50"
 spec:
@@ -13,10 +11,16 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: ./components/cert-manager/operator
+    repoURL: https://charts.jetstack.io
+    chart: cert-manager
+    targetRevision: v1.17.2
+    helm:
+      valuesObject:
+        installCRDs: true
   syncPolicy:
     syncOptions:
       - ServerSideApply=true
+      - CreateNamespace=true
     automated:
       prune: true
       selfHeal: true
