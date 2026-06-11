@@ -10,7 +10,7 @@ resources:
   - operators/external-secrets-operator.yaml
 
   - operators/nanogw-operator.yaml
-  #- operators/apic-operator.yaml
+  - operators/apic-operator.yaml
   - operators/valkey-operator.yaml
 
   - operands/all-operands.yaml
