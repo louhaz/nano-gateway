@@ -4,7 +4,7 @@ metadata:
   name: ngw
 spec:
   profile: n1xc2.m4
-  version: 12.1.0.2
+  version: 12.1.0.3
   license: {}
   imagePullSecrets:
   - ibm-entitlement-key
