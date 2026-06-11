@@ -11,13 +11,13 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: ibm-apiconnect
-  namespace: default
+  namespace: nanogw
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: ibm-apiconnect
-  namespace: default
+  namespace: nanogw
 rules:
 - apiGroups:
   - ""
@@ -497,7 +497,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: ibm-apiconnect-leader-election-role
-  namespace: default
+  namespace: nanogw
 rules:
 - apiGroups:
   - ""
@@ -885,7 +885,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: ibm-apiconnect
-  namespace: default
+  namespace: nanogw
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -893,13 +893,13 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: ibm-apiconnect
-  namespace: default
+  namespace: nanogw
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: ibm-apiconnect-leader-election-rolebinding
-  namespace: default
+  namespace: nanogw
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -907,7 +907,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: ibm-apiconnect
-  namespace: default
+  namespace: nanogw
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -920,7 +920,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: ibm-apiconnect
-  namespace: default
+  namespace: nanogw
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -933,7 +933,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: ibm-apiconnect
-  namespace: default
+  namespace: nanogw
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -946,7 +946,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: ibm-apiconnect
-  namespace: default
+  namespace: nanogw
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -959,13 +959,13 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: ibm-apiconnect
-  namespace: default
+  namespace: nanogw
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: ibm-apiconnect-metrics-service
-  namespace: default
+  namespace: nanogw
 spec:
   ports:
   - name: https
@@ -981,7 +981,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ibm-apiconnect-webhook-service
-  namespace: default
+  namespace: nanogw
 spec:
   ports:
   - port: 443
@@ -996,7 +996,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: postgresql-operator-webhook-service
-  namespace: default
+  namespace: nanogw
 spec:
   ports:
   - port: 443
@@ -1015,7 +1015,7 @@ metadata:
     productName: IBM API Connect Enterprise
     productVersion: 12.1.0.2-2404
   name: ibm-apiconnect
-  namespace: default
+  namespace: nanogw
 spec:
   replicas: 1
   selector:
@@ -1077,12 +1077,12 @@ spec:
         - name: APPLIANCE
           value: "false"
         - name: IMAGE_REGISTRY
-          value: REPLACE-DOCKER-REGISTRY
+          value: cp.icr.io
         - name: ENABLE_PPROF
           value: "false"
         - name: FIPS_ENABLED
           value: "false"
-        image: REPLACE-DOCKER-REGISTRY/ibm-apiconnect-operator@sha256:cd4d73637bb761f4509c1f489293379564e8521eee132f1d1039d29d119ec85f
+        image: cp.icr.io/ibm-apiconnect-operator@sha256:cd4d73637bb761f4509c1f489293379564e8521eee132f1d1039d29d119ec85f
         name: ibm-apiconnect
         ports:
         - containerPort: 9443
@@ -1110,7 +1110,7 @@ spec:
         - mountPath: /extern-versions
           name: extern-versions
       imagePullSecrets:
-      - name: DEFAULT_IMAGE_PULL_SECRET
+      - name: ibm-entitlement-key
       initContainers:
       - args:
         - webhook-init
@@ -1125,7 +1125,7 @@ spec:
           value: ibm-apiconnect-validating-webhook-configuration
         - name: FIPS_ENABLED
           value: "false"
-        image: REPLACE-DOCKER-REGISTRY/ibm-apiconnect-operator@sha256:cd4d73637bb761f4509c1f489293379564e8521eee132f1d1039d29d119ec85f
+        image: cp.icr.io/ibm-apiconnect-operator@sha256:cd4d73637bb761f4509c1f489293379564e8521eee132f1d1039d29d119ec85f
         name: webhook
         resources:
           limits:
@@ -1167,7 +1167,7 @@ spec:
               fieldPath: metadata.uid
         - name: FIPS_ENABLED
           value: "false"
-        image: REPLACE-DOCKER-REGISTRY/ibm-apiconnect-operator@sha256:cd4d73637bb761f4509c1f489293379564e8521eee132f1d1039d29d119ec85f
+        image: cp.icr.io/ibm-apiconnect-operator@sha256:cd4d73637bb761f4509c1f489293379564e8521eee132f1d1039d29d119ec85f
         name: webhook-delete
         resources:
           limits:
@@ -1206,7 +1206,7 @@ webhooks:
   clientConfig:
     service:
       name: ibm-apiconnect-webhook-service
-      namespace: default
+      namespace: nanogw
       path: /mutate-devportal-apiconnect-ibm-com-v1beta1-devportalcluster
   failurePolicy: Fail
   name: mdevportalcluster.kb.io
@@ -1226,7 +1226,7 @@ webhooks:
   clientConfig:
     service:
       name: ibm-apiconnect-webhook-service
-      namespace: default
+      namespace: nanogw
       path: /mutate-federatedapimanagement-apiconnect-ibm-com-v1beta1-federatedapimanagementcluster
   failurePolicy: Fail
   name: mfederatedapimanagementcluster.kb.io
@@ -1246,7 +1246,7 @@ webhooks:
   clientConfig:
     service:
       name: ibm-apiconnect-webhook-service
-      namespace: default
+      namespace: nanogw
       path: /mutate-analytics-apiconnect-ibm-com-v1beta1-analyticsbackup
   failurePolicy: Fail
   name: manalyticsbackup.kb.io
@@ -1266,7 +1266,7 @@ webhooks:
   clientConfig:
     service:
       name: ibm-apiconnect-webhook-service
-      namespace: default
+      namespace: nanogw
       path: /mutate-analytics-apiconnect-ibm-com-v1beta1-analyticscluster
   failurePolicy: Fail
   name: manalyticscluster.kb.io
@@ -1286,7 +1286,7 @@ webhooks:
   clientConfig:
     service:
       name: ibm-apiconnect-webhook-service
-      namespace: default
+      namespace: nanogw
       path: /mutate-gateway-apiconnect-ibm-com-v1beta1-gatewaycluster
   failurePolicy: Fail
   name: mgatewaycluster.kb.io
@@ -1306,7 +1306,7 @@ webhooks:
   clientConfig:
     service:
       name: ibm-apiconnect-webhook-service
-      namespace: default
+      namespace: nanogw
       path: /mutate-management-apiconnect-ibm-com-v1beta1-managementcluster
   failurePolicy: Fail
   name: mmanagementcluster.kb.io
@@ -1326,7 +1326,7 @@ webhooks:
   clientConfig:
     service:
       name: ibm-apiconnect-webhook-service
-      namespace: default
+      namespace: nanogw
       path: /mutate-management-apiconnect-ibm-com-v1beta1-managementdbupgrade
   failurePolicy: Fail
   name: mmanagementdbupgrade.kb.io
@@ -1346,7 +1346,7 @@ webhooks:
   clientConfig:
     service:
       name: ibm-apiconnect-webhook-service
-      namespace: default
+      namespace: nanogw
       path: /mutate-management-apiconnect-ibm-com-v1beta1-managementrestore
   failurePolicy: Fail
   name: mmanagementrestore.kb.io
@@ -1366,7 +1366,7 @@ webhooks:
   clientConfig:
     service:
       name: ibm-apiconnect-webhook-service
-      namespace: default
+      namespace: nanogw
       path: /mutate-portal-apiconnect-ibm-com-v1beta1-portalcluster
   failurePolicy: Fail
   name: mportalcluster.kb.io
@@ -1386,7 +1386,7 @@ webhooks:
   clientConfig:
     service:
       name: ibm-apiconnect-webhook-service
-      namespace: default
+      namespace: nanogw
       path: /mutate-apiconnect-ibm-com-v1beta1-apiconnectcluster
   failurePolicy: Fail
   name: mapiconnectcluster.kb.io
@@ -1406,7 +1406,7 @@ webhooks:
   clientConfig:
     service:
       name: ibm-apiconnect-webhook-service
-      namespace: default
+      namespace: nanogw
       path: /mutate-nanogateway-apiconnect-ibm-com-v1beta1-nanogatewaycluster
   failurePolicy: Fail
   name: mnanogatewaycluster.kb.io
@@ -1426,7 +1426,7 @@ webhooks:
   clientConfig:
     service:
       name: ibm-apiconnect-webhook-service
-      namespace: default
+      namespace: nanogw
       path: /mutate-wmapigateway-apiconnect-ibm-com-v1beta1-wmapigatewaycluster
   failurePolicy: Fail
   name: mwmapigatewaycluster.kb.io
@@ -1452,7 +1452,7 @@ webhooks:
   clientConfig:
     service:
       name: postgresql-operator-webhook-service
-      namespace: default
+      namespace: nanogw
       path: /mutate-postgresql-k8s-enterprisedb-io-v1-backup
   failurePolicy: Fail
   name: mbackup.k8s.enterprisedb.io
@@ -1472,7 +1472,7 @@ webhooks:
   clientConfig:
     service:
       name: postgresql-operator-webhook-service
-      namespace: default
+      namespace: nanogw
       path: /mutate-postgresql-k8s-enterprisedb-io-v1-cluster
   failurePolicy: Fail
   name: mcluster.k8s.enterprisedb.io
@@ -1492,7 +1492,7 @@ webhooks:
   clientConfig:
     service:
       name: postgresql-operator-webhook-service
-      namespace: default
+      namespace: nanogw
       path: /mutate-postgresql-k8s-enterprisedb-io-v1-scheduledbackup
   failurePolicy: Fail
   name: mscheduledbackup.k8s.enterprisedb.io
@@ -1518,7 +1518,7 @@ webhooks:
   clientConfig:
     service:
       name: ibm-apiconnect-webhook-service
-      namespace: default
+      namespace: nanogw
       path: /validate-devportal-apiconnect-ibm-com-v1beta1-devportalcluster
   failurePolicy: Fail
   name: vdevportalcluster.kb.io
@@ -1538,7 +1538,7 @@ webhooks:
   clientConfig:
     service:
       name: ibm-apiconnect-webhook-service
-      namespace: default
+      namespace: nanogw
       path: /validate-federatedapimanagement-apiconnect-ibm-com-v1beta1-federatedapimanagementcluster
   failurePolicy: Fail
   name: vfederatedapimanagementcluster.kb.io
@@ -1558,7 +1558,7 @@ webhooks:
   clientConfig:
     service:
       name: ibm-apiconnect-webhook-service
-      namespace: default
+      namespace: nanogw
       path: /validate-analytics-apiconnect-ibm-com-v1beta1-analyticsbackup
   failurePolicy: Fail
   name: vanalyticsbackup.kb.io
@@ -1579,7 +1579,7 @@ webhooks:
   clientConfig:
     service:
       name: ibm-apiconnect-webhook-service
-      namespace: default
+      namespace: nanogw
       path: /validate-analytics-apiconnect-ibm-com-v1beta1-analyticscluster
   failurePolicy: Fail
   name: vanalyticscluster.kb.io
@@ -1600,7 +1600,7 @@ webhooks:
   clientConfig:
     service:
       name: ibm-apiconnect-webhook-service
-      namespace: default
+      namespace: nanogw
       path: /validate-analytics-apiconnect-ibm-com-v1beta1-analyticsrestore
   failurePolicy: Fail
   name: vanalyticsrestore.kb.io
@@ -1621,7 +1621,7 @@ webhooks:
   clientConfig:
     service:
       name: ibm-apiconnect-webhook-service
-      namespace: default
+      namespace: nanogw
       path: /validate-analytics-apiconnect-ibm-com-v1beta1-analyticssecretrotation
   failurePolicy: Fail
   name: vanalyticssecretrotation.kb.io
@@ -1642,7 +1642,7 @@ webhooks:
   clientConfig:
     service:
       name: ibm-apiconnect-webhook-service
-      namespace: default
+      namespace: nanogw
       path: /validate-gateway-apiconnect-ibm-com-v1beta1-gatewaycluster
   failurePolicy: Fail
   name: vgatewaycluster.kb.io
@@ -1662,7 +1662,7 @@ webhooks:
   clientConfig:
     service:
       name: ibm-apiconnect-webhook-service
-      namespace: default
+      namespace: nanogw
       path: /validate-management-apiconnect-ibm-com-v1beta1-managementcluster
   failurePolicy: Fail
   name: vmanagementcluster.kb.io
@@ -1682,7 +1682,7 @@ webhooks:
   clientConfig:
     service:
       name: ibm-apiconnect-webhook-service
-      namespace: default
+      namespace: nanogw
       path: /validate-management-apiconnect-ibm-com-v1beta1-managementdbupgrade
   failurePolicy: Fail
   name: vmanagementdbupgrade.kb.io
@@ -1702,7 +1702,7 @@ webhooks:
   clientConfig:
     service:
       name: ibm-apiconnect-webhook-service
-      namespace: default
+      namespace: nanogw
       path: /validate-management-apiconnect-ibm-com-v1beta1-managementrestore
   failurePolicy: Fail
   name: vmanagementrestore.kb.io
@@ -1722,7 +1722,7 @@ webhooks:
   clientConfig:
     service:
       name: ibm-apiconnect-webhook-service
-      namespace: default
+      namespace: nanogw
       path: /validate-portal-apiconnect-ibm-com-v1beta1-portalbackup
   failurePolicy: Fail
   name: vportalbackup.kb.io
@@ -1743,7 +1743,7 @@ webhooks:
   clientConfig:
     service:
       name: ibm-apiconnect-webhook-service
-      namespace: default
+      namespace: nanogw
       path: /validate-portal-apiconnect-ibm-com-v1beta1-portalcluster
   failurePolicy: Fail
   name: vportalcluster.kb.io
@@ -1763,7 +1763,7 @@ webhooks:
   clientConfig:
     service:
       name: ibm-apiconnect-webhook-service
-      namespace: default
+      namespace: nanogw
       path: /validate-portal-apiconnect-ibm-com-v1beta1-portalrestore
   failurePolicy: Fail
   name: vportalrestore.kb.io
@@ -1784,7 +1784,7 @@ webhooks:
   clientConfig:
     service:
       name: ibm-apiconnect-webhook-service
-      namespace: default
+      namespace: nanogw
       path: /validate-portal-apiconnect-ibm-com-v1beta1-portalsecretrotation
   failurePolicy: Fail
   name: vportalsecretrotation.kb.io
@@ -1805,7 +1805,7 @@ webhooks:
   clientConfig:
     service:
       name: ibm-apiconnect-webhook-service
-      namespace: default
+      namespace: nanogw
       path: /validate-apiconnect-ibm-com-v1beta1-apiconnectcluster
   failurePolicy: Fail
   name: vapiconnectcluster.kb.io
@@ -1825,7 +1825,7 @@ webhooks:
   clientConfig:
     service:
       name: ibm-apiconnect-webhook-service
-      namespace: default
+      namespace: nanogw
       path: /validate-nanogateway-apiconnect-ibm-com-v1beta1-nanogatewaycluster
   failurePolicy: Fail
   name: vnanogatewaycluster.kb.io
@@ -1845,7 +1845,7 @@ webhooks:
   clientConfig:
     service:
       name: ibm-apiconnect-webhook-service
-      namespace: default
+      namespace: nanogw
       path: /validate-wmapigateway-apiconnect-ibm-com-v1beta1-wmapigatewaybackup
   failurePolicy: Fail
   name: vwmapigatewaybackup.kb.io
@@ -1866,7 +1866,7 @@ webhooks:
   clientConfig:
     service:
       name: ibm-apiconnect-webhook-service
-      namespace: default
+      namespace: nanogw
       path: /validate-wmapigateway-apiconnect-ibm-com-v1beta1-wmapigatewaycluster
   failurePolicy: Fail
   name: vwmapigatewaycluster.kb.io
@@ -1886,7 +1886,7 @@ webhooks:
   clientConfig:
     service:
       name: ibm-apiconnect-webhook-service
-      namespace: default
+      namespace: nanogw
       path: /validate-wmapigateway-apiconnect-ibm-com-v1beta1-wmapigatewayrestore
   failurePolicy: Fail
   name: vwmapigatewayrestore.kb.io
@@ -1913,7 +1913,7 @@ webhooks:
   clientConfig:
     service:
       name: postgresql-operator-webhook-service
-      namespace: default
+      namespace: nanogw
       path: /validate-postgresql-k8s-enterprisedb-io-v1-backup
   failurePolicy: Fail
   name: vbackup.k8s.enterprisedb.io
@@ -1933,7 +1933,7 @@ webhooks:
   clientConfig:
     service:
       name: postgresql-operator-webhook-service
-      namespace: default
+      namespace: nanogw
       path: /validate-postgresql-k8s-enterprisedb-io-v1-cluster
   failurePolicy: Fail
   name: vcluster.k8s.enterprisedb.io
@@ -1953,7 +1953,7 @@ webhooks:
   clientConfig:
     service:
       name: postgresql-operator-webhook-service
-      namespace: default
+      namespace: nanogw
       path: /validate-postgresql-k8s-enterprisedb-io-v1-pooler
   failurePolicy: Fail
   name: vpooler.k8s.enterprisedb.io
@@ -1973,7 +1973,7 @@ webhooks:
   clientConfig:
     service:
       name: postgresql-operator-webhook-service
-      namespace: default
+      namespace: nanogw
       path: /validate-postgresql-k8s-enterprisedb-io-v1-scheduledbackup
   failurePolicy: Fail
   name: vscheduledbackup.k8s.enterprisedb.io
