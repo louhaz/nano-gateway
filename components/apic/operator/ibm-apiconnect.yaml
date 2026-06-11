@@ -5,7 +5,7 @@ metadata:
     productVersion: 12.1.0.2-2404
   labels:
     control-plane: ibm-apiconnect
-  name: default
+  name: nanogw
 ---
 apiVersion: v1
 kind: ServiceAccount
