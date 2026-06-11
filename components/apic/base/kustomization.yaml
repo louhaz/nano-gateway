@@ -3,4 +3,4 @@ kind: Kustomization
 
 resources:
   - ingress-issuer-v1.yaml
-  - management_cr.yaml
+  # - management_cr.yaml

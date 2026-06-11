@@ -19,7 +19,7 @@ kind: ManagementCluster
 metadata:
   name: management
 spec:
-  version: 12.1.0.3
+  version: 12.1.0.2
   imagePullSecrets:
   - ibm-entitlement-key
   imageRegistry: cp.icr.io/cp/apic
