@@ -9,9 +9,9 @@ spec:
         - name: valkey
           namespace: nanogw
           sync-wave: "300"
-        - name: nanogw
-          namespace: nanogw
-          sync-wave: "300"
+        # - name: nanogw
+        #   namespace: nanogw
+        #   sync-wave: "300"
         - name: apic
           namespace: nanogw
           sync-wave: "300"
