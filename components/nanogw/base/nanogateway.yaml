@@ -18,7 +18,7 @@ spec:
     annotations:
       cert-manager.io/issuer: ingress-issuer
     hosts:
-      - name: https://apic-gateway-proxy.mycluster-eu-de-1-bxf-8x3-e7d3d93b8b317d269525bf063b24f98d-0000.eu-de.containers.appdomain.cloud
+      - name: apic-gateway-proxy.mycluster-eu-de-1-bxf-8x3-e7d3d93b8b317d269525bf063b24f98d-0000.eu-de.containers.appdomain.cloud
         secretName: gateway-proxy-endpoint
   redis:
     hosts:
