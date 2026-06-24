@@ -13,7 +13,7 @@ resources:
   - operators/apic-operator.yaml
   - operators/valkey-operator.yaml
 
-  - operands/all-operands.yaml
+  #- operands/all-operands.yaml
  
 
 patches:
