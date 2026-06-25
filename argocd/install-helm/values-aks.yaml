@@ -5,27 +5,27 @@ server:
 
   ingress:
     enabled: true
-    ingressClassName: nginx
-    annotations:
-      nginx.ingress.kubernetes.io/ssl-passthrough: "false"
-      nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
-      cert-manager.io/cluster-issuer: letsencrypt-prod
+    ingressClassName: webapprouting.kubernetes.azure.com
+    # annotations:
+    #   nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+    #   nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    #   cert-manager.io/cluster-issuer: letsencrypt-prod
     # AKS cluster: itzaks-nurmlarj (westeurope) — point this hostname DNS to 108.141.49.68
-    hostname: argocd.itzaks-nurmlarj.westeurope.cloudapp.azure.com
+    #hostname: argocd.itzaks-nurmlarj.westeurope.cloudapp.azure.com
     tls: true
-    extraTls:
-      - hosts:
-          - argocd.itzaks-nurmlarj.westeurope.cloudapp.azure.com
-        secretName: argocd-tls
+    # extraTls:
+    #   - hosts:
+    #       - argocd.itzaks-nurmlarj.westeurope.cloudapp.azure.com
+    #     secretName: argocd-tls
 
 configs:
   params:
     # Required when TLS is terminated at the Ingress
     server.insecure: "true"
 
-  cm:
-    # Required for SSO redirect URIs and the UI login link
-    url: https://argocd.itzaks-nurmlarj.westeurope.cloudapp.azure.com
+  # cm:
+  #   # Required for SSO redirect URIs and the UI login link
+  #   url: https://argocd.itzaks-nurmlarj.westeurope.cloudapp.azure.com
 
 repoServer:
   replicas: 1
